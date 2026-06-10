@@ -5,7 +5,7 @@ readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
 readonly VERSION="v.0.0.4 bugfix"
-readonly NOTES="Only available for Windows for now..."
+readonly NOTES="Now available for Linux"
 
 echo -e "${RED}"
 
