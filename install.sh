@@ -10,7 +10,7 @@ for tool in "${REQUIRED[@]}"; do
 	if [ $? -eq 0 ]; then
 		echo -e "${GREEN}[+] $tool already installed."
 	else
-		echo -e "${YELLOW}[*] ool isn't installed. Installing now...${RESET}"
+		echo -e "${YELLOW}[*] $tool isn't installed. Installing now...${RESET}"
 		sudo apt install $tool
 	fi
 done
