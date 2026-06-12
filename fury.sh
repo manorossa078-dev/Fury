@@ -4,7 +4,7 @@ readonly RED="\e[1;31m"
 readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
-readonly VERSION="v.0.0.5"
+readonly VERSION="v.0.0.5 bugfix"
 readonly NOTES="No notes available."
 
 echo -e "${RED}"
@@ -71,3 +71,5 @@ else
         echo -e "${RED}Error. Invalid flag. Try -h to view help." >&2
         exit 1
 fi
+
+echo -e "${RESET}"
