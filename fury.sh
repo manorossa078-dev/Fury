@@ -4,8 +4,8 @@ readonly RED="\e[1;31m"
 readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
-readonly VERSION="v.0.0.4 bugfix"
-readonly NOTES="Now available for Linux"
+readonly VERSION="v.0.0.5"
+readonly NOTES="Only available for Windows for now..."
 
 echo -e "${RED}"
 
@@ -26,9 +26,15 @@ if [ -z "$1" ]; then
 elif [ "$1" == "-h" ]; then
         echo "-----------------------------------"
         echo "Use -h to view this message"
+        echo "Use -u to view the usage of all options"
         echo "Use -gp to generate a payload"
         echo "Use -lc to launch the console"
         echo "-----------------------------------"
+elif [ "$1" == "-u" ]; then
+        echo "-------------------------------------------------------------"
+        echo "Usage for -gp: use the -gp flag and follow the instructions."
+        echo "Usage for -lc: use the -lc command and type your commands."
+        echo "-------------------------------------------------------------"
 elif [ "$1" == "-gp" ]; then
         read -p "Enter the operating system: " OS
         read -p "Enter the architecture: " architecture
