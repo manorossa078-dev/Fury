@@ -4,7 +4,7 @@ readonly RED="\e[1;31m"
 readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
-readonly VERSION="v.0.0.6"
+readonly VERSION="v.0.0.6 bugfix"
 readonly NOTES="No notes available."
 
 echo -e "${RED}"
@@ -85,8 +85,12 @@ elif [ "$1" == "-lf" ]; then
                 sudo ./fluxion.sh
                 echo -e "${YELLOW}[*] Fluxion closed."
         else
-                echo -e "${RED}[!] Error. Fluxion not found. Press any key to stop the cloning repo...${RESET}"
-                read -t 5 -n 1 response
+                echo -e "${RED}[!] Error. Fluxion not found. Press q to stop the cloning repo...${RESET}"
+                read -t 5 -n 1 key
+                if [ "$key" == "q" ]; then
+                        echo -e "${YELLOW}[*] Exiting install..."
+                        exit 0
+                fi
                 git clone https://github.com/FluxionNetwork/fluxion.git
                 echo -e "${GREEN}[+] Launching fluxion..."
                 cd fluxion
