@@ -1,4 +1,0 @@
-To place it in a place where the tool is reachable type:
-  sudo cp fury.sh /usr/local/bin/fury
-inside of your Fury folder. Afte the initialization you can delete the directory with:
-  rm -rf Fury/
