@@ -4,7 +4,7 @@ readonly RED="\e[1;31m"
 readonly GREEN="\e[1;32m"
 readonly YELLOW="\e[1;33m"
 readonly RESET="\e[0m"
-readonly VERSION="v.0.0.6 bugfix"
+readonly VERSION="v.0.0.7"
 readonly NOTES="No notes available."
 
 echo -e "${RED}"
@@ -30,12 +30,14 @@ elif [ "$1" == "-h" ]; then
         echo "Use -gp to generate a payload"
         echo "Use -lc to launch the console"
         echo "Use -lf to launch fluxtion"
+        echo "Use -ls to launch a metasploit server"
         echo "-----------------------------------"
 elif [ "$1" == "-u" ]; then
         echo "-------------------------------------------------------------"
         echo "Usage for -gp: use the -gp flag and follow the instructions."
         echo "Usage for -lc: use the -lc flag and type your commands."
         echo "Usage for -lf: use the -lf flag to enter the fluxtion terminal (be sure that you are inside your fluxtion tool directory and don't worry if it isn't installed because Fury will install it automatically)."
+        echo "Usage for -ls: use the -ls flag and follow its instructions to create a Metasploit Server"
         echo "-------------------------------------------------------------"
 elif [ "$1" == "-gp" ]; then
         read -p "Enter the operating system: " OS
@@ -97,6 +99,15 @@ elif [ "$1" == "-lf" ]; then
                 chmod +x fluxion.sh
                 sudo ./fluxion.sh -i
         fi
+elif [ "$1" == "-ls" ]; then
+        read -p "Enter your password: " password
+        read -p "Enter your port: " port
+        read -p "Enter your IPv4 address: " address
+        echo -e "[+] Starting msfrpcd server with username 'msf'...${RESET}"
+        sudo systemctl start postgresql
+        sudo msfdb init && sudo msfdb reinit
+        msfrpcd -P $password -p $port -U msf -a $address -S
+        echo -e "${GREEN}[+] Server started!"
 else
         echo -e "${RED}Error. Invalid flag. Try -h to view help." >&2
         exit 1
